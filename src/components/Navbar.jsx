@@ -9,6 +9,9 @@ import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 import avatar from '../data/avatar.jpg';
 import { Cart, Chat, Notification, UserProfile } from './index';
 import { useStateContext } from '../contexts/ContextProvider'
+import { Dropdown, message, Space } from 'antd';
+import { BiDownArrow } from 'react-icons/bi';
+import { useNavigate } from 'react-router-dom';
 
 const NavButton = ({ title, customFunc, icon, color, dotColor }) => (
   <TooltipComponent
@@ -33,7 +36,7 @@ const NavButton = ({ title, customFunc, icon, color, dotColor }) => (
 )
 
 const Navbar = () => {
-
+  const navigate = useNavigate();
   const {
     setActiveMenu,
     handleClick,
@@ -42,7 +45,7 @@ const Navbar = () => {
     setScreenSize,
     currentColor
   } = useStateContext();
-
+  const User = JSON.parse(localStorage.getItem('user'));
   useEffect(() => {
     const handleResize = () => setScreenSize(window.innerWidth);
 
@@ -57,7 +60,18 @@ const Navbar = () => {
     if (screenSize <= 900) setActiveMenu(false);
     else setActiveMenu(true);
   }, [screenSize, setActiveMenu]);
+  const items = [
+    {
+      label: 'Đăng xuất',
+      key: '1',
+    },
 
+  ];
+  const onClick = ({ key }) => {
+    message.success("Đăng xuất thành công")
+    localStorage.removeItem("user")
+    navigate("/dang-nhap")
+  };
   return (
     <nav className='flex justify-between p-2 md:mx-6 relative'>
       <NavButton
@@ -73,14 +87,23 @@ const Navbar = () => {
           className='flex items-center gap-2 cursor-pointer p-1 hover:bg-light-gray rounded-lg'
           onClick={() => handleClick('userProfile')}
         >
-          <img
-            className='rounded-full w-8 h-8'
-            src={avatar}
-          />
+
           <p>
-            <span className='text-gray-400 text-14'>Hi, </span> {' '}
-            <span className='text-gray-400 font-bold ml-1 text-14'>Admin</span>
+            <Dropdown
+              menu={{
+                items,
+                onClick,
+              }}
+            >
+              <a onClick={(e) => e.preventDefault()}>
+                <Space>
+                  Hi, {(User.Quyen == 0 ? "Nhân viên - " : "Admin - ") + User.TenNV}
+
+                </Space>
+              </a>
+            </Dropdown>
           </p>
+
           <MdKeyboardArrowDown className='text-gray-400 text-14' />
         </div>
         {isClicked.cart && <Cart />}

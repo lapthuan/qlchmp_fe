@@ -17,16 +17,7 @@ import { BiCategory } from 'react-icons/bi';
 import { BsFillPeopleFill, BsHouse, BsBoxSeam } from 'react-icons/bs';
 
 const links = [
-  {
-    title: 'Phân tán dữ liệu',
-    links: [
-      {
-        href: 'phan-tan',
-        name: 'Phân tán',
-        icon: <SiMysql />,
-      },
-    ],
-  },
+
   {
     title: 'Thống kê',
     links: [
@@ -81,6 +72,74 @@ const links = [
         href: 'phieu-nhap',
         icon: <AiOutlineDeliveredProcedure />,
       },
+
+    ],
+  },
+
+
+];
+const linksAdmin = [
+
+  {
+    title: 'Thống kê',
+    links: [
+      {
+        href: 'trang-chu',
+        name: 'Trang chủ',
+        icon: <FiShoppingBag />,
+      },
+    ],
+  },
+
+  {
+    title: 'Danh sách',
+    links: [
+      {
+        name: 'Sản phẩm',
+        href: 'san-pham',
+        icon: <BsBoxSeam />,
+      },
+      {
+        name: 'Mã giảm giá',
+        href: 'ma-giam-gia',
+        icon: <RiCoupon3Line />,
+      },
+      {
+        name: 'Danh mục',
+        href: 'danh-muc',
+        icon: <BiCategory />,
+      },
+      {
+        name: 'Hóa đơn',
+        href: 'hoa-don',
+        icon: <RiBillLine />,
+      },
+      {
+        name: 'Khách hàng',
+        href: 'khach-hang',
+        icon: <BsFillPeopleFill />,
+      },
+      {
+        name: 'Kho',
+        href: 'kho',
+        icon: <BsHouse />,
+      },
+      {
+        name: 'Nhãn hàng',
+        href: 'nhan-hang',
+        icon: <SiBrandfolder />,
+      },
+      {
+        name: 'Phiếu nhập',
+        href: 'phieu-nhap',
+        icon: <AiOutlineDeliveredProcedure />,
+      },
+
+    ],
+  },
+  {
+    title: "Quản trị",
+    links: [
       {
         name: 'Chi nhánh',
         href: 'chi-nhanh',
@@ -103,14 +162,13 @@ const links = [
         href: 'nhan-vien',
         icon: <RiAccountPinBoxLine />,
       },
-    ],
-  },
+    ]
+  }
 
 ];
 
-
 const Sidebar = () => {
-
+  const User = JSON.parse(localStorage.getItem('user'));
   const {
     activeMenu,
     setActiveMenu,
@@ -156,8 +214,39 @@ const Sidebar = () => {
             <div
               className='mt-10'
             >
-              {
+              {User.Quyen == "0" ?
                 links.map((item, index) => (
+                  <div key={index}>
+                    <p className='text-gray-400 m-3 mt-4 uppercase'>
+                      {item.title}
+                    </p>
+                    {
+                      item.links.map((link, index) => (
+                        <NavLink
+                          to={`/${link.href}`}
+                          key={index}
+                          onClick={handleCloseSideBar}
+                          style={
+                            ({ isActive }) => ({ backgroundColor: isActive ? currentColor : '' })
+                          }
+                          className={({ isActive }) =>
+                          (
+                            isActive ? activeLink : normalLink
+                          )
+                          }
+                        >
+                          {link.icon}
+                          <span
+                            className='capitalize'
+                          >
+                            {link.name}
+                          </span>
+                        </NavLink>
+                      ))
+                    }
+                  </div>
+                )) :
+                linksAdmin.map((item, index) => (
                   <div key={index}>
                     <p className='text-gray-400 m-3 mt-4 uppercase'>
                       {item.title}
