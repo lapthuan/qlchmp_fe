@@ -97,7 +97,7 @@ const Navbar = () => {
             >
               <a onClick={(e) => e.preventDefault()}>
                 <Space>
-                  Hi, {(User.Quyen == 0 ? "Nhân viên - " : "Admin - ") + User.TenNV}
+                  Hi, {(User?.Quyen == 0 ? "Nhân viên - " : "Admin - ") + User?.TenNV}
 
                 </Space>
               </a>
