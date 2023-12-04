@@ -72,9 +72,9 @@ const HoaDonID = () => {
             }
 
             const res = await ServiceOrder.createOrder(body)
-            if (res.message == "Đã tồn tại") {
+            if (res.message == "hóa đơn đã tồn tại") {
                 message.warning("Mã hóa đơn đã tồn tại!")
-            } else if (res.message == "Đồng bộ thêm thành công") {
+            } else {
                 message.success("Thêm dữ liệu thành công và đồng bộ dữ liệu thành công!")
 
             }
