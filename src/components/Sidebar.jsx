@@ -214,7 +214,7 @@ const Sidebar = () => {
             <div
               className='mt-10'
             >
-              {User.Quyen == "0" ?
+              {User?.Quyen == "0" ?
                 links.map((item, index) => (
                   <div key={index}>
                     <p className='text-gray-400 m-3 mt-4 uppercase'>
